@@ -1,5 +1,5 @@
 <template>
-  <div class="col-md-12 container">
+  <div class="col-md-12 containerLogin">
     <div class="card card-container">
       <img
         id="profile-img"
@@ -103,12 +103,10 @@ export default {
 </script>
 
 <style scoped>
-.container {
+containerLogin {
+  margin:0px;
+  padding:0px;
   height: 100%;
-  max-height: 100%;
-  width: 100%;
-  max-width: 100%;
-  margin: 0px;
 }
 
 label {

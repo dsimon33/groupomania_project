@@ -26,14 +26,14 @@ isAdmin = (req, res, next) => {
   User.findByPk(req.userId).then(user => {
     user.getRoles().then(roles => {
       for (let i = 0; i < roles.length; i++) {
-        if (roles[i].name === "admin") {
+        if (roles[i].name === "administrateur") {
           next();
           return;
         }
       }
 
       res.status(403).send({
-        message: "Require Admin Role!"
+        message: "Le Role Administrateur est requis!"
       });
       return;
     });
@@ -44,14 +44,14 @@ isModerator = (req, res, next) => {
   User.findByPk(req.userId).then(user => {
     user.getRoles().then(roles => {
       for (let i = 0; i < roles.length; i++) {
-        if (roles[i].name === "moderator") {
+        if (roles[i].name === "moderateur") {
           next();
           return;
         }
       }
 
       res.status(403).send({
-        message: "Require Moderator Role!"
+        message: "Le Role modérateur est requis!"
       });
     });
   });
@@ -61,19 +61,19 @@ isModeratorOrAdmin = (req, res, next) => {
   User.findByPk(req.userId).then(user => {
     user.getRoles().then(roles => {
       for (let i = 0; i < roles.length; i++) {
-        if (roles[i].name === "moderator") {
+        if (roles[i].name === "moderateurr") {
           next();
           return;
         }
 
-        if (roles[i].name === "admin") {
+        if (roles[i].name === "administrateur") {
           next();
           return;
         }
       }
 
       res.status(403).send({
-        message: "Require Moderator or Admin Role!"
+        message: "Le Role modérateur ou administrateur est requis!"
       });
     });
   });

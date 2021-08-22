@@ -47,7 +47,7 @@ exports.findAll = (req, res) => {
 
     include: {
       model: User, as: 'userpost',
-      attributes: ['username', 'id']
+      attributes: ['username', 'id', 'introduction']
     },
     order: [['createdAt', 'DESC']],
   })
@@ -79,7 +79,7 @@ exports.findOne = (req, res) => {
 
     include: {
       model: User, as: 'userpost',
-      attributes: ['username', 'id']
+      attributes: ['username', 'id', 'introduction']
     },
   })
   
@@ -95,6 +95,7 @@ exports.findOne = (req, res) => {
 // Mettre à jour un post
 exports.update = (req, res) => {
   const id = req.params.id;
+  console.log(req);
 
   Post.update(req.body, {
     where: { id: id }
@@ -150,6 +151,22 @@ exports.deleteAll = (req, res) => {
 exports.findAllReport = (req, res) => {
   Post.findAll({
     where: { report: true },
+    attributes: [
+      'id',
+      'title',
+      'description',
+      'attachment',
+      'report',
+      [sequelize.fn('date_format', sequelize.col('Post.createdAt'), '%d/%m/%Y %H:%i:%s'), 'createdAt']
+    ],
+
+
+    include: {
+      model: User, as: 'userpost',
+      attributes: ['username', 'id', 'introduction']
+    },
+    order: [['createdAt', 'DESC']],
+
   })
     .then(data => {
       res.send(data);

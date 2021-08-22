@@ -1,18 +1,18 @@
 <template>
-  <div class="container">
+  <div class="containerULA">
     <div>
     <div v-if="users && user.roles[0] == role" class="edit-form">
       <div class="col-md-auto">
-      <div class="input-group mb-3">
+      <div class="input-group mb-3 search">
         <input
           type="text"
           class="form-control"
-          placeholder="Rechercher un utilsateur par son pseudo"
+          placeholder="Rechercher un utilisateur par son pseudo"
           v-model="username"
         />
         <div class="input-group-append">
           <button
-            class="btn btn-outline-secondary"
+            class="btn btn-outline-secondary search_Btn"
             type="button"
             @click="searchUser"
           >
@@ -21,21 +21,22 @@
         </div>
       </div>
     </div>
-      <div class="col-md-12 text-center">
-        <h4>liste des utilisateurs</h4>
-        <div class="card bg-dark">
+      <div class="col-md-12">
+        <h1>Liste des utilisateurs</h1>
+        <div class="card cardUser">
           <div
-            class="card-body text-center bg-light"
+            class="card-body user"
             :class="{ active: index == currentIndex }"
             v-for="(user, index) in users"
             :key="index"
             @click="setActiveUser(user, index)"
           >
-            <h1 class="card-title">{{ user.username }}</h1>
-            <p class="card-texte">{{ user.email }}</p>
-            <p class="publicationDate">
+            <h2 class="card-title">{{ user.username }}</h2>
+            <p class="userDate">
               Utilisateur crée le {{ user.createdAt }}
             </p>
+            <p class="card-texte descriptionUser" style="white-space: pre-line;">{{ user.introduction }}</p>
+            <p class="card-texte text-center">{{ user.email }}</p>
           </div>
         </div>
       </div>
@@ -58,7 +59,7 @@ export default {
       currentUser: null,
       currentIndex: -1,
       username: this.username,
-      role: "ROLE_ADMIN",
+      role: "ROLE_ADMINISTRATEUR",
       user: JSON.parse(localStorage.getItem("user")),
     };
   },
@@ -108,22 +109,70 @@ export default {
 
 
 <style lang="scss">
-.card {
-  align-items: center;
+h1, h2 {
+  text-align: center;
+  margin-top: 0px;
+}
 
-  .card-body {
+h2 {
+  font-size: 120%;
+}
+
+
+.search {
+  padding-top:20px;
+  margin: auto;
+  width: 85%;
+  max-width: 100%;
+  }
+  
+
+.cardUser {
+  align-items: center;
+  margin: auto;
+  padding: 0px;
+  background :transparent;
+  border-style : none;
+  max-width: 100%;
+  width: 85%;
+
+}
+
+.user {
     align-items: center;
     min-width: 100%;
     justify-content: center;
     margin-top: 20px;
     margin-bottom: 20px;
-    box-sizing: border-box;
-    padding: 30px;
-    box-shadow: 15px 12px grey;
+    background: linear-gradient(rgb(47, 124, 255), skyblue);
+    border-style: double;
 
-    .publicationDate {
-      font-size: 8px;
-    }
-  }
 }
+
+.descriptionUser {
+      border-style: double;
+      border-color: dark;
+      background-color: white;
+      text-align: center;
+      font-size: 18px;
+      min-height: 80px;
+
+
+}
+
+
+.userDate {
+      font-size: 8px;
+      text-align: center;
+}
+
+
+.search__Btn {
+  background-color: skyblue;
+  
+}
+
+.search__Btn:hover {
+    background-color: rgb(47,124,255);
+  }
 </style>>

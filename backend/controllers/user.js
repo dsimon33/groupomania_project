@@ -1,9 +1,9 @@
 const db = require("../models");
 const User = db.user;
+const Role = db.role;
 const Op = db.Sequelize.Op;
 const sequelize = db.Sequelize;
 const fs = require('fs');
-const post = require("../models/post");
 
 
 exports.allAccess = (req, res) => {
@@ -32,6 +32,7 @@ exports.findAll = (req, res) => {
       'id',
       'username',
       'email',
+      'introduction',
       [sequelize.fn('date_format', sequelize.col('User.createdAt'), '%d/%m/%Y %H:%i:%s'), 'createdAt']
     ],
 
@@ -50,7 +51,21 @@ exports.findAll = (req, res) => {
 exports.findOne = (req,res) => {
   const id = req.params.id;
 
-  User.findByPk(id)
+  User.findByPk(id, {
+    where: { id: id },
+    attributes: [
+      'id',
+      'introduction',
+      'email',
+      'username',
+      [sequelize.fn('date_format', sequelize.col('User.createdAt'), '%d/%m/%Y %H:%i:%s'), 'createdAt']
+    ],
+    
+    include: {
+      model: Role,
+      attributes: ['name', 'id']
+    },
+  })
   .then(data => {
     res.status(200).send({data: data, message: `L'utilisateur a été trouvé ` });
   })
@@ -59,7 +74,7 @@ exports.findOne = (req,res) => {
   })
 }
 
-// Supprimer un User
+// Supprimer un Utilisteur
 exports.delete =(req, res) => {
   const id = req.params.id;
 
@@ -77,4 +92,24 @@ exports.delete =(req, res) => {
   .catch(err => {
     res.status(500).send({ message: `erreur de suppression de l'utilisateur ` + id });
   });
+};
+
+// Mettre à jour un utilisateur
+exports.update = (req, res) => {
+  const id = req.params.id;
+
+  User.update(req.body, {
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({ message: `L'utilisateur a été mis à jour`});
+      }
+      else {
+        res.send({ messsage: `impossible de mettre à jour l'utlisateur' avec id=${id}.` });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({ message: `erreur de mise à jour de l'utilisateur` + id });
+    });
 };

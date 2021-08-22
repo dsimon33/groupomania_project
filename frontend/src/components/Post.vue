@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="containerPost">
     <div v-if="currentPost && user.roles[0] == role" class="edit-form">
       <h1>Publication de {{ currentPost.userpost.username }} du {{ currentPost.createdAt }}</h1>
       <form>
@@ -52,10 +52,10 @@
     </div>
     </div>
     <div
-      v-else-if="currentPost && user.id == currentPost.userId"
+      v-else-if="currentPost && user.id == currentPost.userpost.id"
       class="edit-form"
     >
-    <h1>Publication de {{ currentPost.userpost.username }}</h1>
+    <h1 class= "text-center">Publication de {{ currentPost.userpost.username }}</h1>
       <form>
         <div class="form-group">
           <label for="title">Titre</label>
@@ -69,6 +69,7 @@
         <div class="form-group">
           <span>Descriptif</span>
           <textarea
+            style="white-space: pre-line;"
             type="text"
             class="form-control"
             v-model="currentPost.description"
@@ -77,7 +78,7 @@
 
         <div class="form-group">
           <label><strong>Status:</strong></label>
-          {{ currentPost.report ? "Ce post à été signalé" : "" }}
+          {{ currentPost.report ? "Ce post à été signalé" : "Ce post n'a pas été signalé" }}
         </div>
       </form>
       <div class="modifPost">
@@ -93,10 +94,10 @@
 
     <div v-else>
 
-      <div class="card-body text-center">
+      <div class="card-body text-center cardPub">
         <h1 class="PostUser">Publication de {{ currentPost.userpost.username }}</h1>
         <h2 class="card-title">{{ currentPost.title }}</h2>
-        <h3 class="card-texte pubDetails">{{ currentPost.description }}</h3>
+        <h3 class="card-texte pubDetails" style="white-space: pre-line;">{{ currentPost.description }}</h3>
         <p class="publicationDate">
           post publié le {{ currentPost.createdAt }}
         </p>
@@ -112,17 +113,16 @@
           Signaler
         </button>
         <div class="form-group">
-          <label><strong>Status:</strong>  Non signalée</label>
           {{
             currentPost.report
               ? "Cette publication à été signalé comme non approprié"
-              : "Ciquer sur signaler si vous estimez que cette publication est inappropriée"
+              : "Cliquer sur signaler si vous estimez que cette publication est inappropriée"
           }}
         </div>
       </div>
     </div>
 
-    <div class="col-md-12 text-center">
+    <div class="col-md-12 text-center ">
       <h4>Liste des Commentaires</h4>
       <div class="card cardComments">
         <div
@@ -130,13 +130,13 @@
           v-for="(comment, index) in comments"
           :key="index"
         >
-          <p class="userComment"><font-awesome-icon icon="user" />
+          <p class="userComment"><font-awesome-icon icon="user" />  {{comment.usercomment.username}}
              le {{comment.createdAt}}</p>
           <p class="descriptionComment">{{ comment.content }}</p>
         </div>
       </div>
     </div>
-    <div class="col-md-12 comment">
+    <div class="col-md-12 comment cardComm">
       <div class="form-group col-md-12">
         <span>Commenter cette publication :</span>
         <textarea
@@ -147,7 +147,7 @@
         />
       </div>
       <div  class="text-center">
-      <button @click="saveComment" class="btn btn-success">Envoyer</button>
+      <button @click="saveComment" class="btn btn-success">Publier votre commentaire</button>
       </div>
     </div>
   </div>
@@ -166,7 +166,7 @@ export default {
       comments: [],
       currentIndex: -1,
       newCommentText: "",
-      role: "ROLE_ADMIN",
+      role: "ROLE_ADMINISTRATEUR",
       user: JSON.parse(localStorage.getItem("user")),
     };
   },
@@ -260,13 +260,17 @@ export default {
 
 <style lang="scss">
 
-.container {
-  background: linear-gradient(rgb(47, 124, 255), skyblue);
+h4 {
+  padding-top: 15px;
+}
+
+.containerPost {
   height: 100%;
   max-height: 100%;
   width: 100%;
-  max-width: 100%;
-  margin: 0px;
+  max-width: 85%;
+  margin: auto;
+  padding-top: 50px;
 }
 
 .card {
@@ -275,6 +279,12 @@ export default {
   padding: 0px;
   background :transparent;
   border-style : none;
+}
+
+.cardPub, .cardComm {
+  background: linear-gradient(rgb(47, 124, 255), skyblue);
+  padding: 0px;
+
 }
 
 
@@ -290,24 +300,21 @@ export default {
   margin-bottom: 10px;
 }
 
-.cardComments {
-  margin-top: 10px;
-
-}
-
 .blocComment {
   padding: 10px;
   margin: 10px;
-  max-width: 80%;
+  max-width: 100%;
   width: 100%;
   border: 10px ridge skyblue;
 }
 
 .pubDetails {
-  background: skyblue;
+  background: white;
   max-width: 100%;
   width: 100%;
+  height: 300px;
   border: 10px ridge rgb(47, 124, 255);
+  overflow: auto;
 
 }
 

@@ -1,20 +1,23 @@
 <template>
-  <div class="container">
+  <div class="container PLA">
     <div v-if="posts && user.roles[0] ==  role" class="edit-form">
     <div class="col-md-12 text-center">
-      <h4>liste des Publications signalées</h4>
-      <div class="card bg-dark">
+      <h1>Liste des Publications signalées</h1>
+      <div class="card cardPostSign">
         <div
-          class="card-body text-center bg-light"
+          class="card-body postSign"
           :class="{ active: index == currentIndex }"
           v-for="(post, index,) in posts"
           :key="index"
           @click="setActivePost(post, index)"
         >
-          <h1 class="card-title">{{ post.title }}</h1>
-          <p class="card-texte">{{ post.description }}</p>
+        <p class="card-texte usernameCreatePostSign">
+            <font-awesome-icon icon="user" /><span style="white-space: pre-line;" :title= "post.userpost.introduction" >   {{ post.userpost.username }} </span>
+          </p>
+          <h2 class="card-title">{{ post.title }}</h2>
           <p class="publicationDate">post publié le {{ post.createdAt }}</p>
-          <p class="publicationDate">post modifié le {{ post.updatedAt }}</p>
+          <p class="card-texte descriptionPostSign" style="xhite-space: pre-line;">{{ post.description }}</p>
+          
         </div>
       </div>
     </div>
@@ -36,7 +39,7 @@ export default {
       currentPost: null,
       currentIndex: -1,
       title: this.title,
-      role: "ROLE_ADMIN",
+      role: "ROLE_ADMINISTRATEUR",
       user: JSON.parse(localStorage.getItem("user")),
     };
   },
@@ -64,7 +67,6 @@ export default {
       this.currentIndex = index;
       console.log(this.currentPost.id);
       this.$router.push("/posts/" + this.currentPost.id);
-      location.reload();
     },
 
   },
@@ -78,22 +80,59 @@ export default {
 
 
 <style lang="scss">
-.card {
-  align-items: center;
 
-  .card-body {
+h1, h2 {
+  text-align: center;
+  margin-top: 0px;
+}
+
+h2 {
+  font-size: 120%;
+}
+
+
+
+.cardPostSign {
+  align-items: center;
+  margin: auto;
+  padding: 0px;
+  background :transparent;
+  border-style : none;
+  max-width: 100%;
+  width: 85%;
+
+}
+
+.postSign {
     align-items: center;
     min-width: 100%;
     justify-content: center;
     margin-top: 20px;
     margin-bottom: 20px;
-    box-sizing: border-box;
-    padding: 30px;
-    box-shadow: 15px 12px grey;
+    background: linear-gradient(rgb(47, 124, 255), skyblue);
+    border-style: double;
 
-    .publicationDate {
+}
+
+.usernameCreatePostSign {
+      font-style: italic;
+      margin: 0px;
+      text-align: left;
+}
+
+.publicationDate {
       font-size: 8px;
-    }
-  }
+      text-align: center;
+}
+
+.descriptionPostSign {
+      border-style: double;
+      border-color: dark;
+      background-color: white;
+      text-align: center;
+      font-size: 18px;
+      min-height: 80px;
+
+
 }
 </style>>

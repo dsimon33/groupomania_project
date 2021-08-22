@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="containerBA">
     <header class="jumbotron">
       <div class="navbar-nav mr-auto">
         <button class="nav-item menu">
@@ -52,17 +52,24 @@ export default {
 <style lang="scss">
 
 .jumbotron {
-  background: blue($color: #000000);
+  background:none;
+  height: 900px
 }
 
 .menu {
 
+  font-weight: bold;
   margin-top: 20px;
   margin-bottom: 20px;
-  box-shadow: 15px 12px grey;
+  max-width: 350px;
+  margin-right: auto;
+  margin-left: auto;
+  width: 100%;
+  background: linear-gradient(rgb(47, 124, 255), skyblue);
+  box-shadow: 15px 12px skyblue;
   border: 2px oustet #c0c0c0;
   :hover {
-    background-color:rgba(53,58,64);
+    background-color:skyblue;
   }
 }
 </style>

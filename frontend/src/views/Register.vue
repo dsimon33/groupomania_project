@@ -1,5 +1,5 @@
 <template>
-  <div class="col-md-12 container">
+  <div class="col-md-12">
     <div class="card card-container">
       <img
         id="profile-img"
@@ -55,6 +55,7 @@
             <textarea
               v-model="user.introduction"
               v-validate="'required|min:3|max:300'"
+              placeholder="ajouter plusieurs lignes"
               type="text"
               class="form-control introduction"
               name="introduction"
@@ -62,7 +63,7 @@
             <div
               v-if="submitted && errors.has('introduction')"
               class="alert-danger"
-            >{{errors.first('inroduction')}}</div>
+            >{{errors.first('introduction')}}</div>
           </div>
           <div class="form-group">
             <input type="submit" class="btn btn-primary btn-block" value="S'enregistrer">

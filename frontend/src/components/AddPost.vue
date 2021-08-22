@@ -1,7 +1,7 @@
 <template>
   <div class="submit-form detailPost">
     <div v-if="!submitted">
-      <div class="form-group ">
+      <div class="form-group">
         <label for="title">Votre titre</label>
         <input
           type="text"
@@ -23,13 +23,20 @@
           name="description"
         />
       </div>
-
-      <button @click="savePost" class="btn btn-success">Valider votre nouveau Post</button>
+      <div class="text-center" >
+        <button @click="savePost" class="btn btn-success">
+          Valider votre nouveau Post
+        </button>
+      </div>
     </div>
 
     <div v-else>
-      <h4>You submitted successfully!</h4>
-      <button class="btn btn-success" @click="newPost">Add</button>
+      <h4>Votre Post a été publié</h4>
+      <div class="text-center">
+      <button class="btn btn-success" @click="newPost">
+        Créer un nouveau Post
+      </button>
+      </div>
     </div>
   </div>
 </template>
@@ -47,12 +54,11 @@ export default {
         description: "",
         attachment: "",
         report: false,
-        user: JSON.parse(localStorage.getItem('user'))
+        user: JSON.parse(localStorage.getItem("user")),
       },
-      submitted: false
+      submitted: false,
     };
   },
-  
 
   methods: {
     savePost() {
@@ -62,37 +68,33 @@ export default {
         attachment: this.post.attachment,
         report: this.post.report,
         userId: this.post.user.id,
-        
       };
       console.log(data);
 
       PostDataService.create(data)
-        .then(response => {
+        .then((response) => {
           this.post.id = response.data.id;
           console.log(response.data);
           this.submitted = true;
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
     },
-    
+
     newPost() {
       this.submitted = false;
       this.post = {};
-    }
-  }
+      location.reload();
+    },
+  },
 };
 </script>
 
 <style lang="scss">
-.container {
+.detailPost {
   background: linear-gradient(rgb(47, 124, 255), skyblue);
-  height: 100%;
-  max-height: 100%;
-  width: 100%;
-  max-width: 100%;
-  margin: 0px;
+  padding: 10px;
 }
 
 .submit-form {
@@ -101,10 +103,11 @@ export default {
 }
 
 .introduction {
-  display:flex;
-  height :250px;
+  display: flex;
+  height: 250px;
   padding-bottom: 200px;
-  justify-content: center;
 }
 
+.btn__newpost {
+}
 </style>

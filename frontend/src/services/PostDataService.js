@@ -29,6 +29,7 @@ class PostDataService {
   }
  
   update(id, data) {
+    console.log(data);
     return http
     .put(`/posts/${id}`, data);
   }

@@ -1,38 +1,45 @@
 <template>
   <div>
     <div v-if="currentUser && user.roles[0] == role" class="edit-form">
-      <h4>Utilisateur</h4>
-      <div class="card-body text-center bg-light">
+      <div class="vide"></div>
+      <div class="card-body text-center cardUser">
         <h1 class="card-title">{{ currentUser.username }}</h1>
         <p class="card-texte">{{ currentUser.email }}</p>
-        <p class="card-texte">{{ currentUser.introduction }}</p>
-        <strong>Authorities:</strong>
-        <ul>
-          <li v-for="(role, index) in currentUser.roles" :key="index">
-            {{ role }}
-          </li>
-        </ul>
+        <form>
+        <div class="form-group">
+          <label for="title">Présentation</label>
+          <input
+            type="text"
+            class="form-control descriptionUser"
+            id="presentation"
+            v-model="currentUser.introduction"
+          />
+        </div>
+        </form>
+        <h2>Accés autorisé:</h2>
+        <p> {{ currentUser.roles[0].name }}</p>
         
       </div>
-      
-      
+      <div class="vide"></div>
+      <div class="text-center">
       <button class="badge badge-danger mr-2" @click="deleteUser">
         Supprimer
       </button>
-
+      
+      <button type="submit" class="badge badge-success" @click="updateIntroduction">
+        Modifier
+      </button>
+      </div>
+      <div class="vide"></div>
     </div>
     
     <div v-else>
-      <div class="card-body text-center bg-light">
+      <div class="card-body text-center">
         <h1 class="card-title">{{ currentUser.username }}</h1>
         <p class="card-texte">{{ currentUser.email }}</p>
-        <p class="card-texte">{{ currentUser.introduction }}</p>
-        <strong>Authorities:</strong>
-        <ul>
-          <li v-for="(role, index) in currentUser.roles" :key="index">
-            {{ role }}
-          </li>
-        </ul>
+        <p class="card-texte descriptionUser" style="white-space: pre-line;">{{ user.introduction }}</p>
+        <h2>Accés autorisé:</h2>
+        <p v-for="(role,index) in currentUser.roles" :key="index">{{role}}</p>
       </div>
     </div>
   </div>
@@ -47,7 +54,7 @@ export default {
     return {
       currentUser: "",
       currentIndex: -1,
-      role: "ROLE_ADMIN",
+      role: "ROLE_ADMINISTRATEUR",
       user: JSON.parse(localStorage.getItem("user")),
     };
   },
@@ -58,6 +65,14 @@ export default {
           this.currentUser = response.data.data;
           console.log(response.data.data);
         })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+
+    updateIntroduction() {
+      UserService.update(this.currentUser.id, this.currentUser.introduction)
+        .then(res => res.data) 
         .catch((e) => {
           console.log(e);
         });
@@ -84,5 +99,22 @@ export default {
 .edit-form {
   max-width: 300px;
   margin: auto;
+  
+}
+.cardUser {
+background: linear-gradient(rgb(47, 124, 255), skyblue);
+}
+
+.vide {
+  height: 20px;
+}
+
+.descriptionUser {
+      border-style: double;
+      border-color: dark;
+      background-color: white;
+      text-align: center;
+      font-size: 18px;
+      min-height: 80px;
 }
 </style>

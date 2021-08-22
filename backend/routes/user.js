@@ -33,6 +33,6 @@ module.exports = function(app) {
   app.get("/api/auth", authJwt.verifyToken, authJwt.isAdmin, controller.findAll); // Récupérer tous les Utilisateurs
   app.get("/api/auth/:id", authJwt.verifyToken, controller.findOne) // Récupérer un seul utilisateur
   app.delete("/api/auth/:id", authJwt.verifyToken, authJwt.isAdmin, controller.delete) // Supprimer un utilisateur
-
+  app.put("api/auth/:id", authJwt.verifyToken, controller.update) // Modifier un utilisateur
 
 };

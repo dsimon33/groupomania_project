@@ -23,26 +23,28 @@ app.use(bodyParser.json());
 
 const db= require('./models');
 const Role = db.role;
+const User = db.user;
 
-/*db.sequelize.sync ({force: true}).then(() =>{ à uncomment pour initialser la BDD puis à comment ensuite afin de ne pas effacer les données saisie du frontend.
+/*db.sequelize.sync ({force: true}).then(() =>{ 
   initial();
 });
 
 function initial() {
   Role.create({
     id: 1, 
-    name: "user"
+    name: "utilisateur"
   });
  
   Role.create({
     id: 2,
-    name: "moderator"
+    name: "moderateur"
   });
  
   Role.create({
     id: 3,
-    name: "admin"
+    name: "administrateur"
   });
+
 }*/
 
 app.use(helmet());

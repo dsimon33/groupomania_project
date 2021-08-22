@@ -20,8 +20,10 @@
   height: 100%;
   max-height: 100%;
   width: 100%;
-  max-width: 100%;
-  margin: 0px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
 }
 
 
@@ -30,11 +32,15 @@
 
   margin-top: 20px;
   margin-bottom: 20px;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
   
   }
   .menu__Btn {
     background: white;
     border: 2px solid rgb(47, 124, 255);
+    
 }
 
 .menu__Btn:hover {

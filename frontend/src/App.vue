@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <nav class="navbar navbar-expand-lg navigation">
+    <nav class="navbar navbar-expand-lg navigation" id="nav">
       <a href class="navbar-brand" @click.prevent><img class="logo" src ="./assets/icon-left-font-monochrome-white.svg" alt="logo groupomania" /> </a>
       <div class="navbar-nav mr-auto">
         <li v-if="showAdminBoard" class="nav-item">
@@ -40,6 +40,9 @@
         </li>
       </div>
     </nav>
+    <div class="retourNav">
+      <a href="#nav" class="retourNavIco"><font-awesome-icon icon="home" /></a>
+    </div>
 
     <div class="container">
       <router-view />
@@ -56,21 +59,21 @@ export default {
     },
     showAdminBoard() {
       if (this.currentUser && this.currentUser.roles) {
-        return this.currentUser.roles.includes('ROLE_ADMIN');
+        return this.currentUser.roles.includes('ROLE_ADMINISTRATEUR');
       }
 
       return false;
     },
     showUserBoard() {
       if (this.currentUser && this.currentUser.roles) {
-        return this.currentUser.roles.includes('ROLE_USER');
+        return this.currentUser.roles.includes('ROLE_UTILISATEUR');
       }
 
       return false;
     },
     showModeratorBoard() {
       if (this.currentUser && this.currentUser.roles) {
-        return this.currentUser.roles.includes('ROLE_MODERATOR');
+        return this.currentUser.roles.includes('ROLE_MODERATEUR');
       }
 
       return false;
@@ -95,5 +98,27 @@ img.logo {
   background-color: skyblue;
 }
 
+.retourNav {
+  position: fixed;
+  left : 0px;
+  top: 50%;
+  width: 20px;
+  background-color: white;
+  border-radius: 0px 30px 30px 0px;
+
+  
+
+}
+
+.container {
+  background-image: url("./assets/iconminimodif.png");
+  background-repeat: repeat;
+  padding: 0px;
+}
+
+#app {
+  height: auto;
+  
+}
 
 </style>

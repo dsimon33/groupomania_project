@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="containerPL">
     <div class="col-md-auto">
       <div class="input-group mb-3 search">
         <input
@@ -10,7 +10,7 @@
         />
         <div class="input-group-append">
           <button
-            class="btn btn-outline-secondary menu__Btn"
+            class="btn btn-outline-secondary search__Btn"
             type="button"
             @click="searchTitle"
           >
@@ -21,8 +21,8 @@
     </div>
 
     <div class="col-md-12">
-      <h1>liste des Publications</h1>
-      <div class="card">
+      <h1>Liste des Publications</h1>
+      <div class="card cardPost">
         <div
           class="card-body post"
           :class="{ active: index == currentIndex }"
@@ -31,11 +31,11 @@
           @click="setActivePost(post, index)"
         >
           <p class="card-texte usernameCreatePost">
-            <font-awesome-icon icon="user" />  {{ post.userpost.username }}
+            <font-awesome-icon icon="user" /><span style="white-space: pre-line;" :title= "post.userpost.introduction" >   {{ post.userpost.username }} </span>
           </p>
           <h2 class="card-title">{{ post.title }}</h2>
           <p class="publicationDate">post publié le {{ post.createdAt }}</p>
-          <p class="card-texte descriptionPost">{{ post.description }}</p>
+          <p class="card-texte descriptionPost" style="white-space: pre-line;">{{ post.description }}</p>
         </div>
       </div>
     </div>
@@ -112,16 +112,24 @@ h2 {
   font-size: 120%;
 }
 
+
 .search {
   padding-top:20px;
+  margin: auto;
+  width: 85%;
+  max-width: 100%;
   }
+  
 
-.card {
+.cardPost {
   align-items: center;
-  margin: 0px;
+  margin: auto;
   padding: 0px;
   background :transparent;
   border-style : none;
+  max-width: 100%;
+  width: 85%;
+
 }
 
 .post {
@@ -130,7 +138,7 @@ h2 {
     justify-content: center;
     margin-top: 20px;
     margin-bottom: 20px;
-    background: white;
+    background: linear-gradient(rgb(47, 124, 255), skyblue);
     border-style: double;
 
 }
@@ -148,10 +156,23 @@ h2 {
 .descriptionPost {
       border-style: double;
       border-color: dark;
-      background-color: skyblue;
+      background-color: white;
       text-align: center;
-      font-size: 18px
+      font-size: 18px;
+      min-height: 80px;
+
 
 }
+
+.search__Btn {
+  background-color: skyblue;
+  
+}
+
+.search__Btn:hover {
+    background-color: rgb(47,124,255);
+  }
+
+
 
 </style>>
