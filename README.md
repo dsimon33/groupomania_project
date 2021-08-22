@@ -49,7 +49,7 @@ Vous devrier obtenir :
 ### Ouvrir votre terminal SQL Command Line Client et connectez-vous avec votre mot de passe
 
 #### Connectez-vous à la Base de donnée que vous avez créée avec la commande : USE "nom de votre BDD";
-#### Taper : "select * from users;" pour vous assurer que votre utilisateur admin porte bien l'id "1".
+#### Taper : "SELECT * FROM users;" pour vous assurer que votre utilisateur admin porte bien l'id "1".
 #### Donner le role administrateur à votre admin en tapant la commande suivante : UPDATE user_roles SET roleId=3 WHERE userId=1  (adapter le numéro du userId si besoin).
 
 Vous êtes prêt, votre admin disposera à présent des droits administrateurs a sa prochaine connexion.
